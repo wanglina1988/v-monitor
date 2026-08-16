@@ -1,0 +1,22 @@
+{
+  "ok": 1,
+  "data": {
+    "cards": [
+      {"card_type": 9, "mblog": {
+        "id": "5000000001",
+        "created_at": "Sat Aug 16 09:30:00 +0800 2026",
+        "text": "今天的行情很有意思<a href=\"https://m.weibo.cn/n/x\">@x</a>",
+        "user": {"id": 1234567890, "screen_name": "晏凌羊"},
+        "reposts_count": 5, "comments_count": 3, "attitudes_count": 20
+      }},
+      {"card_type": 9, "mblog": {
+        "id": "5000000002",
+        "created_at": "Sat Aug 16 08:00:00 +0800 2026",
+        "text": "转发：<a href=\"/n/a\">原文</a>",
+        "user": {"id": 1234567890, "screen_name": "晏凌羊"},
+        "retweeted_status": {"id": "7777777777"}
+      }},
+      {"card_type": 11, "desc": "不是微博，应被忽略"}
+    ]
+  }
+}

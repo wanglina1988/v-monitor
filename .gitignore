@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.pyc
+.env.local
+data/cookies.json
+*.log
+/data/logs.txt
+.DS_Store
+Thumbs.db
+/data/last_run.json

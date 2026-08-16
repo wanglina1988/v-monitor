@@ -1,0 +1,35 @@
+name: 大V动态监控
+
+on:
+  schedule:
+    # 每 5 分钟一次（GitHub 最短间隔）；微博端有轮询间隔配置，不会超频
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: v-monitor
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 运行监控（抓取 → 微信推送 → 提交回写）
+        env:
+          WECOM_CORPID: ${{ secrets.WECOM_CORPID }}
+          WECOM_SECRET: ${{ secrets.WECOM_SECRET }}
+          WECOM_AGENT_ID: ${{ secrets.WECOM_AGENT_ID }}
+          WECOM_TOUSER: ${{ secrets.WECOM_TOUSER }}
+          XUEQIU_COOKIE: ${{ secrets.XUEQIU_COOKIE }}
+          WEIBO_COOKIE: ${{ secrets.WEIBO_COOKIE }}
+        run: python scripts/run_once.py --push --commit

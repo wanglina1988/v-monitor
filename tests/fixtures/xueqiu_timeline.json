@@ -1,0 +1,35 @@
+{
+  "statuses": [
+    {
+      "id": 10001,
+      "title": "聊聊今天的大盘",
+      "description": "<p>今天大盘不错，<b>继续持有</b>。</p>",
+      "target": "/1702928600/10001",
+      "type": "status",
+      "created_at": "2026-08-16 09:30:00",
+      "user": {"id": 1702928600, "screen_name": "养猫的叔"},
+      "reply_count": 12,
+      "retweet_count": 3,
+      "like_count": 88
+    },
+    {
+      "id": 10002,
+      "title": "",
+      "description": "转发一条观点",
+      "target": "/1702928600/10002",
+      "type": "status",
+      "created_at": "2026-08-16 10:00:00",
+      "user": {"id": 1702928600, "screen_name": "养猫的叔"},
+      "original_status": {"id": 999, "description": "原帖内容"}
+    },
+    {
+      "id": 10003,
+      "title": "我的投资思考",
+      "description": "这是一篇专栏长文。",
+      "target": "/1702928600/10003",
+      "type": "article",
+      "created_at": "2026-08-15 22:00:00",
+      "user": {"id": 1702928600, "screen_name": "养猫的叔"}
+    }
+  ]
+}

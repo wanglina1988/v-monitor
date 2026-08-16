@@ -1,0 +1,104 @@
+{
+  "poll_interval_minutes": {
+    "xueqiu": 5,
+    "weibo": 10
+  },
+  "initial_backfill_hours": 6,
+  "wecom": {
+    "corpid_env": "WECOM_CORPID",
+    "secret_env": "WECOM_SECRET",
+    "agent_id_env": "WECOM_AGENT_ID",
+    "touser": "@all"
+  },
+  "web": {
+    "port": 8787,
+    "allow_lan": false,
+    "access_token": ""
+  },
+  "influencers": [
+    {
+      "id": "xq_001",
+      "name": "养猫的叔",
+      "platform": "xueqiu",
+      "user_id": "",
+      "enabled": true
+    },
+    {
+      "id": "xq_002",
+      "name": "万法归宗",
+      "platform": "xueqiu",
+      "user_id": "",
+      "enabled": true
+    },
+    {
+      "id": "xq_003",
+      "name": "大黄蚬子hgx",
+      "platform": "xueqiu",
+      "user_id": "",
+      "enabled": true
+    },
+    {
+      "id": "xq_004",
+      "name": "拥抱大时代",
+      "platform": "xueqiu",
+      "user_id": "",
+      "enabled": true
+    },
+    {
+      "id": "xq_005",
+      "name": "飞翔芸",
+      "platform": "xueqiu",
+      "user_id": "",
+      "enabled": true
+    },
+    {
+      "id": "xq_006",
+      "name": "吕执着",
+      "platform": "xueqiu",
+      "user_id": "",
+      "enabled": true
+    },
+    {
+      "id": "wb_001",
+      "name": "晏凌羊",
+      "platform": "weibo",
+      "user_id": "",
+      "enabled": true
+    },
+    {
+      "id": "wb_002",
+      "name": "我心焕然",
+      "platform": "weibo",
+      "user_id": "",
+      "enabled": true
+    },
+    {
+      "id": "wb_003",
+      "name": "乡下宁宁",
+      "platform": "weibo",
+      "user_id": "",
+      "enabled": true
+    },
+    {
+      "id": "wb_004",
+      "name": "刘小波的博",
+      "platform": "weibo",
+      "user_id": "",
+      "enabled": true
+    },
+    {
+      "id": "wb_005",
+      "name": "刘晨曦-从心",
+      "platform": "weibo",
+      "user_id": "",
+      "enabled": true
+    },
+    {
+      "id": "wb_006",
+      "name": "初牛杂谈",
+      "platform": "weibo",
+      "user_id": "",
+      "enabled": true
+    }
+  ]
+}
