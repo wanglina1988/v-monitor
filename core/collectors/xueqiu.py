@@ -12,7 +12,7 @@ import time
 from ..http_client import DEFAULT_UA, HttpError, http_get_json
 from ..models import CollectorResult, Item
 from ..util import iso_zh, now_epoch, parse_zh_datetime, strip_html, to_epoch
-from .base import BaseCollector, CookieInvalidError
+from .base import BaseCollector, CookieInvalidError, WAFBlockedError
 
 BASE = "https://xueqiu.com"
 COMMENTS_ENDPOINT = "/comments/recent.json"  # 候选端点，确认后可直接修改
@@ -83,7 +83,10 @@ class XueqiuCollector(BaseCollector):
         try:
             data = http_get_json(url, headers=self._headers(user_id), timeout=20, retries=2)
         except HttpError as exc:
-            self._check_cookie(self.platform, exc.body or "", status=exc.status)
+            body = exc.body or ""
+            if "aliyun_waf" in body or "renderData" in body or "waf" in body.lower():
+                raise WAFBlockedError(f"雪球反爬验证（WAF）拦截，暂时无法抓取；可在浏览器主站复制带通行证的 Cookie 再试") from exc
+            self._check_cookie(self.platform, body, status=exc.status)
             raise
         if isinstance(data, dict) and ("error" in data or data.get("error_code")):
             self._check_cookie(self.platform, str(data))
@@ -127,6 +130,9 @@ class XueqiuCollector(BaseCollector):
                 error = f"评论接口不可用（已降级为仅发帖/转发）: {exc}"
         except CookieInvalidError as exc:
             cookie_invalid = True
+            error = str(exc)
+        except WAFBlockedError as exc:
+            degraded = True
             error = str(exc)
         except Exception as exc:
             error = f"雪球抓取失败: {exc}"

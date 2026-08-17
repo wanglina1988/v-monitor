@@ -15,6 +15,10 @@ class CookieInvalidError(Exception):
     """Cookie 失效或需要登录。"""
 
 
+class WAFBlockedError(Exception):
+    """平台反爬（如阿里云 WAF JS 验证）拦截，纯 HTTP 无法获取。"""
+
+
 def detect_cookie_invalid(platform: str, text: str) -> bool:
     text = (text or "")
     low = text.lower()
