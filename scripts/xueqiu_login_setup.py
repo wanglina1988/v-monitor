@@ -15,17 +15,21 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROFILE = os.path.join(ROOT, ".xq-profile")
+BROWSER_CHANNEL = os.environ.get("XQ_BROWSER_CHANNEL")
+if not BROWSER_CHANNEL:
+    BROWSER_CHANNEL = "msedge" if os.name == "nt" else None
 
 
 def main() -> int:
     from playwright.sync_api import sync_playwright
 
     with sync_playwright() as p:
+        launch_kwargs = dict(headless=False, args=["--disable-blink-features=AutomationControlled"])
+        if BROWSER_CHANNEL:
+            launch_kwargs["channel"] = BROWSER_CHANNEL
+
         ctx = p.chromium.launch_persistent_context(
-            PROFILE,
-            channel="msedge",
-            headless=False,
-            args=["--disable-blink-features=AutomationControlled"],
+            PROFILE, **launch_kwargs,
         )
         page = ctx.pages[0] if ctx.pages else ctx.new_page()
         page.goto("https://xueqiu.com/", timeout=60000)
