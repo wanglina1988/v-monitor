@@ -10,13 +10,14 @@ jobs:
     steps:
       - name: probe xueqiu from Actions IP
         env:
-          XQ: \${{ secrets.XUEQIU_COOKIE }}
+          XQ: ${{ secrets.XUEQIU_COOKIE }}
         run: |
-          echo "cookie length: \${#XQ}"
+          echo "cookie length: ${#XQ}"
           curl -s -m 30 'https://xueqiu.com/v4/statuses/user_timeline.json?user_id=3533691520&page=1' \
             -H 'accept: application/json, text/plain, */*' \
             -H 'referer: https://xueqiu.com/u/3533691520' \
             -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36' \
-            -H "cookie: \$XQ" \
-            -o /tmp/out.txt -w 'HTTP:%{http_code} SIZE:%{size_download}\n'
+            -H "cookie: $XQ" \
+            -o /tmp/out.txt -w 'HTTP:%{http_code} SIZE:%{size_download}
+'
           head -c 300 /tmp/out.txt
