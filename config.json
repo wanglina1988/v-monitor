@@ -4,6 +4,10 @@
     "weibo": 10
   },
   "initial_backfill_hours": 6,
+  "push": {
+    "channel": "pushplus",
+    "pushplus_token_env": "PUSHPLUS_TOKEN"
+  },
   "wecom": {
     "corpid_env": "WECOM_CORPID",
     "secret_env": "WECOM_SECRET",
@@ -62,47 +66,43 @@
       "id": "wb_001",
       "name": "晏凌羊",
       "platform": "weibo",
-      "user_id": "",
+      "user_id": "1476817753",
       "enabled": true
     },
     {
       "id": "wb_002",
       "name": "我心焕然",
       "platform": "weibo",
-      "user_id": "",
+      "user_id": "6059931491",
       "enabled": true
     },
     {
       "id": "wb_003",
       "name": "乡下宁宁",
       "platform": "weibo",
-      "user_id": "",
+      "user_id": "1823344731",
       "enabled": true
     },
     {
       "id": "wb_004",
       "name": "刘小波的博",
       "platform": "weibo",
-      "user_id": "",
+      "user_id": "6167988003",
       "enabled": true
     },
     {
       "id": "wb_005",
       "name": "刘晨曦-从心",
       "platform": "weibo",
-      "user_id": "",
+      "user_id": "1747643602",
       "enabled": true
     },
     {
       "id": "wb_006",
       "name": "初牛杂谈",
       "platform": "weibo",
-      "user_id": "",
+      "user_id": "5898138107",
       "enabled": true
     }
-  ],
-  "push": {
-    "channel": "pushplus",
-    "pushplus_token_env": "PUSHPLUS_TOKEN"
-  }
+  ]
 }
