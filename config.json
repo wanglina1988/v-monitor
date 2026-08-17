@@ -100,5 +100,9 @@
       "user_id": "",
       "enabled": true
     }
-  ]
+  ],
+  "push": {
+    "channel": "pushplus",
+    "pushplus_token_env": "PUSHPLUS_TOKEN"
+  }
 }

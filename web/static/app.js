@@ -150,10 +150,12 @@ function loadStatus() {
     if (res.status !== 200) return;
     var s = res.data;
     var sec = s.secrets || {};
+    var chName = sec.push_channel === "wecom" ? "企业微信" : (sec.push_channel === "pushplus" ? "PushPlus" : "未配置");
+    var wecomOk = sec.wecom_corpid && sec.wecom_secret && sec.wecom_agent_id;
     var rows = [
-      ["企业微信 CorpID", sec.wecom_corpid ? '<span class="ok">已配置</span>' : '<span class="no">未配置</span>'],
-      ["企业微信 Secret", sec.wecom_secret ? '<span class="ok">已配置</span>' : '<span class="no">未配置</span>'],
-      ["企业微信 AgentId", sec.wecom_agent_id ? '<span class="ok">已配置</span>' : '<span class="no">未配置</span>'],
+      ["推送渠道", chName],
+      ["PushPlus Token", sec.pushplus_token ? '<span class="ok">已配置</span>' : '<span class="no">未配置</span>'],
+      ["企业微信（可选）", wecomOk ? '<span class="ok">已配置</span>' : '<span class="no">未配置</span>'],
       ["雪球 Cookie", sec.xueqiu_cookie ? '<span class="ok">已配置</span>' : '<span class="no">未配置</span>'],
       ["微博 Cookie", sec.weibo_cookie ? '<span class="ok">已配置</span>' : '<span class="no">未配置</span>'],
     ];

@@ -51,7 +51,7 @@ class Pipeline:
             "cookie_invalid": [],
         }
         if push and not self.notifier.enabled:
-            self.log.warn("未配置企业微信推送（缺少 WECOM_CORPID/SECRET/AGENT_ID），本次只记录不推送")
+            self.log.warn("未配置推送渠道（PushPlus Token 或企业微信参数），本次只记录不推送")
 
         for platform in platforms:
             if not force and not self._is_due(platform):

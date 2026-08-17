@@ -113,7 +113,7 @@ def upload_github_secrets(env: dict) -> None:
                 print(f"  {k} = {v[:6]}…（共 {len(v)} 位）")
         print("完整值见本机 .env.local")
         return
-    keys = ["WECOM_CORPID", "WECOM_SECRET", "WECOM_AGENT_ID", "WECOM_TOUSER", "XUEQIU_COOKIE", "WEIBO_COOKIE"]
+    keys = ["PUSHPLUS_TOKEN", "WECOM_CORPID", "WECOM_SECRET", "WECOM_AGENT_ID", "WECOM_TOUSER", "XUEQIU_COOKIE", "WEIBO_COOKIE"]
     print("检测到 gh CLI，将把以下密钥上传到当前仓库 Secrets：")
     for k in keys:
         if env.get(k):

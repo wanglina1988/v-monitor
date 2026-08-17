@@ -12,6 +12,7 @@ CONFIG_FILE = "config.json"
 DEFAULTS: Dict[str, Any] = {
     "poll_interval_minutes": {"xueqiu": 5, "weibo": 10},
     "initial_backfill_hours": 6,
+    "push": {"channel": "pushplus", "pushplus_token_env": "PUSHPLUS_TOKEN"},
     "wecom": {
         "corpid_env": "WECOM_CORPID",
         "secret_env": "WECOM_SECRET",
@@ -71,7 +72,10 @@ class AppConfig:
 
     def secrets_present(self) -> dict:
         w = self.wecom
+        push = self.data.get("push", {})
         return {
+            "push_channel": push.get("channel", "pushplus"),
+            "pushplus_token": bool(self.env(push.get("pushplus_token_env", "PUSHPLUS_TOKEN"))),
             "wecom_corpid": bool(self.env(w.get("corpid_env", "WECOM_CORPID"))),
             "wecom_secret": bool(self.env(w.get("secret_env", "WECOM_SECRET"))),
             "wecom_agent_id": bool(self.env(w.get("agent_id_env", "WECOM_AGENT_ID"))),
