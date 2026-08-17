@@ -18,6 +18,5 @@ jobs:
             -H 'referer: https://xueqiu.com/u/3533691520' \
             -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36' \
             -H "cookie: $XQ" \
-            -o /tmp/out.txt -w 'HTTP:%{http_code} SIZE:%{size_download}
-'
+            -o /tmp/out.txt
           head -c 300 /tmp/out.txt
