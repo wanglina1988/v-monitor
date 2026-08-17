@@ -15,6 +15,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 import subprocess
 import sys
 from datetime import datetime
@@ -25,7 +26,11 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 def post_id(name: str, post: dict) -> str:
     if post.get("id"):
         return str(post["id"])
-    return hashlib.sha1((name + "|" + (post.get("body") or "")).encode("utf-8")).hexdigest()[:16]
+    body = post.get("body") or ""
+    # 归一化易变内容：视频播放数、长数字等（避免置顶帖播放数变化被误判为“新动态”）
+    body = re.sub(r"Play\s*Video\s*\d+", "PlayVideo", body)
+    body = re.sub(r"\d{3,}", "N", body)
+    return hashlib.sha1((name + "|" + body).encode("utf-8")).hexdigest()[:16]
 
 
 def main() -> int:
