@@ -23,7 +23,12 @@ from core.config import load_config  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROFILE = os.path.join(ROOT, ".xq-profile")
+# Windows 用系统 Edge；Linux 服务器用 Playwright Chromium（部署脚本会安装）
+BROWSER_CHANNEL = os.environ.get("XQ_BROWSER_CHANNEL")
+if not BROWSER_CHANNEL:
+    BROWSER_CHANNEL = "msedge" if os.name == "nt" else None
 HOME = "https://xueqiu.com/"
+ALERT_STATE = os.path.join(ROOT, "data", "xueqiu_login_alert.json")
 API = "https://xueqiu.com/v4/statuses/user_timeline.json?user_id={uid}&page={page}"
 
 _HTML_RE = re.compile(r"<[^>]+>")
@@ -89,6 +94,32 @@ def parse_statuses(name: str, data: dict, max_posts: int):
     return posts
 
 
+def send_login_alert(reason: str) -> None:
+    """登录失效时推送到微信（每天最多 1 次，避免每小时刷屏）。"""
+    today = datetime.now().strftime("%Y-%m-%d")
+    state = {}
+    try:
+        with open(ALERT_STATE, "r", encoding="utf-8") as f:
+            state = json.load(f)
+    except Exception:
+        pass
+    if state.get("date") == today:
+        return
+    try:
+        subprocess.run(
+            [sys.executable, os.path.join(ROOT, "scripts", "push_digest.py"),
+             "--title", "⚠️ 雪球速览：需要重新登录",
+             "--content",
+             f"**雪球登录已失效，每小时速览暂时无法抓取。**\n\n原因：{reason}\n\n"
+             "请在本机运行：`python scripts/xueqiu_login_setup.py`，扫码重新登录一次即可。"],
+            capture_output=True, text=True, timeout=60)
+        with open(ALERT_STATE, "w", encoding="utf-8") as f:
+            json.dump({"date": today}, f)
+        print("已推送「需要重新登录」提醒（今日不再重复）")
+    except Exception as exc:
+        print("登录提醒推送失败:", exc)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="雪球速览独立版")
     parser.add_argument("--no-push", action="store_true", help="只更新状态，不推送")
@@ -107,9 +138,12 @@ def main() -> int:
 
     result = []
     with sync_playwright() as p:
+        launch_kwargs = dict(headless=True, args=["--disable-blink-features=AutomationControlled"])
+        if BROWSER_CHANNEL:
+            launch_kwargs["channel"] = BROWSER_CHANNEL
+
         ctx = p.chromium.launch_persistent_context(
-            PROFILE, channel="msedge", headless=True,
-            args=["--disable-blink-features=AutomationControlled"],
+            PROFILE, **launch_kwargs,
         )
         page = ctx.pages[0] if ctx.pages else ctx.new_page()
         try:
