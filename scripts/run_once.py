@@ -27,6 +27,7 @@ from core.secrets import load_env_file     # noqa: E402
 def main() -> int:
     parser = argparse.ArgumentParser(description="运行一次监控")
     parser.add_argument("--platform", default="all", choices=["all", "xueqiu", "weibo"])
+    parser.add_argument("--push", action="store_true", help="推送消息（默认开启，显式声明）")
     parser.add_argument("--no-push", action="store_true", help="不推送消息")
     parser.add_argument("--commit", action="store_true", help="提交并推送数据回仓库")
     parser.add_argument("--force", action="store_true", help="忽略轮询间隔立即执行")

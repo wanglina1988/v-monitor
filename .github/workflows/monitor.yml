@@ -26,6 +26,7 @@ jobs:
 
       - name: 运行监控（抓取 → 微信推送 → 提交回写）
         env:
+          PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
           WECOM_CORPID: ${{ secrets.WECOM_CORPID }}
           WECOM_SECRET: ${{ secrets.WECOM_SECRET }}
           WECOM_AGENT_ID: ${{ secrets.WECOM_AGENT_ID }}
