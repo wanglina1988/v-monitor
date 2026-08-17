@@ -8,3 +8,7 @@ data/cookies.json
 .DS_Store
 Thumbs.db
 /data/last_run.json
+.xq-profile/
+data/xueqiu_storage_state.json
+data/xueqiu_digest_state.json
+data/xueqiu_digest_last.md
