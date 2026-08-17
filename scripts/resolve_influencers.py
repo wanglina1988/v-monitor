@@ -44,21 +44,39 @@ def resolve_xueqiu(name: str, cookie: str):
 
 
 def resolve_weibo(name: str, cookie: str):
-    url = f"https://m.weibo.cn/api/container/getIndex?type=suggestion&value={urllib.parse.quote(name)}"
+    # 主：weibo.com/ajax/side/search（需要登录 Cookie，已验证可用）
+    url = f"https://weibo.com/ajax/side/search?q={urllib.parse.quote(name)}"
     try:
-        data = http_get_json(url, headers={"Cookie": cookie} if cookie else {}, retries=0)
+        data = http_get_json(url, headers={"Cookie": cookie, "Referer": "https://weibo.com/",
+                                           "X-Requested-With": "XMLHttpRequest"}, retries=0)
+        users = (data.get("data") or {}).get("users") or []
+        out = []
+        for u in users:
+            uid = u.get("id") or u.get("idstr")
+            sn = u.get("screen_name") or u.get("name")
+            desc = (u.get("description") or "")[:40]
+            if uid and sn:
+                out.append((str(uid), str(sn), str(desc)))
+        if out:
+            return out
     except HttpError as exc:
-        print(f"  ⚠️ 微博搜索建议接口失败：{exc}")
+        print(f"  ⚠️ 微博搜索接口失败：{exc}")
+    # 回退：m.weibo.cn 建议接口
+    url2 = f"https://m.weibo.cn/api/container/getIndex?type=suggestion&value={urllib.parse.quote(name)}"
+    try:
+        data = http_get_json(url2, headers={"Cookie": cookie} if cookie else {}, retries=0)
+        lst = (data.get("data") or {}).get("list") or []
+        out = []
+        for u in lst:
+            uid = u.get("id")
+            sn = u.get("screen_name") or u.get("name")
+            desc = (u.get("description") or "")[:40]
+            if uid and sn:
+                out.append((str(uid), str(sn), str(desc)))
+        return out
+    except HttpError as exc:
+        print(f"  ⚠️ 微博建议接口失败：{exc}")
         return []
-    lst = (data.get("data") or {}).get("list") or []
-    out = []
-    for u in lst:
-        uid = u.get("id")
-        sn = u.get("screen_name") or u.get("name")
-        desc = (u.get("description") or u.get("followers_count") or "")[:40]
-        if uid and sn:
-            out.append((str(uid), str(sn), str(desc)))
-    return out
 
 
 def main() -> int:
