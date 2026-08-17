@@ -104,5 +104,40 @@
       "user_id": "5898138107",
       "enabled": true
     }
-  ]
+  ],
+  "xueqiu_digest": {
+    "enabled": true,
+    "digest_hours": [
+      6,
+      12,
+      21
+    ],
+    "max_posts_per_user": 5,
+    "targets": [
+      {
+        "name": "拥抱大时代",
+        "url": "https://xueqiu.com/1453667055"
+      },
+      {
+        "name": "养叔的猫",
+        "url": "https://xueqiu.com/ysdm"
+      },
+      {
+        "name": "万法归宗",
+        "url": "https://xueqiu.com/wxw1972101"
+      },
+      {
+        "name": "大黄蚬子hgx",
+        "url": "https://xueqiu.com/3045778209"
+      },
+      {
+        "name": "飞翔芸",
+        "url": "https://xueqiu.com/9957341637"
+      },
+      {
+        "name": "吕执着",
+        "url": "https://xueqiu.com/5673225518"
+      }
+    ]
+  }
 }
