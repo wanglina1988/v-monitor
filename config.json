@@ -107,11 +107,7 @@
   ],
   "xueqiu_digest": {
     "enabled": true,
-    "digest_hours": [
-      6,
-      12,
-      21
-    ],
+    "digest_frequency": "hourly",
     "max_posts_per_user": 5,
     "targets": [
       {
